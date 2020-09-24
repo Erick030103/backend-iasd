@@ -725,20 +725,21 @@ switch($servicio)
                         $idUsuarioCampo = $_SESSION["idUsuarioCampo"];
                         $idCampo = $_SESSION["idCampo"];
                         $idFechasMetas = 0;
-                        $sql2=("INSERT INTO FechasMetas (idMetasEstrategicas, fechaInicial, fechaFinal, anio) VALUES 
-                            (".$idMetasEstrategicas.", '".$fechaAnadirAccionCampo."', '', ".$anio.")");
+                        $sql2=("SELECT insertFechasMetasIdMetasEstrategicas (".$idMetasEstrategicas.", '".$fechaAnadirAccionCampo."', '', ".$anio.")");
+                        //$sql2=("INSERT INTO FechasMetas (idMetasEstrategicas, fechaInicial, fechaFinal, anio) VALUES (".$idMetasEstrategicas.", '".$fechaAnadirAccionCampo."', '', ".$anio.")");
                         $sql3=("SELECT idFechasMetas FROM FechasMetas WHERE idMetasEstrategicas = ".$idMetasEstrategicas." AND anio = ".$anio);
                         $insert = true;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql2=("UPDATE FechasMetas  SET concepto = '".$fechaAnadirAccionCampo."' WHERE idFechasMetas = ".$row3["idFechasMetas"]);
+                                $sql2=("SELECT updateFechasMetasFechaInicial('".$fechaAnadirAccionCampo."', ".$row3["idFechasMetas"].");");
+                                //$sql2=("UPDATE FechasMetas  SET concepto = '".$fechaAnadirAccionCampo."' WHERE idFechasMetas = ".$row3["idFechasMetas"]);
                                 $idFechasMetas = $row3["idFechasMetas"];
                                 $insert = false;
                             }
-                            $sql2=("INSERT INTO FechasMetas (idMetasEstrategicas, fechaInicial, fechaFinal, anio) VALUES 
-                            (".$idMetasEstrategicas.", '".$fechaAnadirAccionCampo."', '', ".$anio.")");
+                            $sql2=("SELECT insertFechasMetasIdMetasEstrategicas (".$idMetasEstrategicas.", '".$fechaAnadirAccionCampo."', '', ".$anio.")");
+                            //$sql2=("INSERT INTO FechasMetas (idMetasEstrategicas, fechaInicial, fechaFinal, anio) VALUES (".$idMetasEstrategicas.", '".$fechaAnadirAccionCampo."', '', ".$anio.")");
                             $insert = true;
                             if($query2 = mysqli_query($recordset->conn,$sql2))
                             {
@@ -761,15 +762,16 @@ switch($servicio)
                         $idUsuarioCampo = $_SESSION["idUsuarioCampo"];
                         $idCampo = $_SESSION["idCampo"];
                         $idPresupuestoMetas = 0;
-                        $sql2=("INSERT INTO PresupuestoMetas (idMetasEstrategicas, presupuesto, concepto, anio) VALUES 
-                            (".$idMetasEstrategicas.",0, '".$gastoAnadirAccionCampo."', ".$anio.")");
+                         $sql2=("SELECT insertPresupuestoMetasAnio (".$idMetasEstrategicas.",0, '".$gastoAnadirAccionCampo."', ".$anio.")");
+                        //$sql2=("INSERT INTO PresupuestoMetas (idMetasEstrategicas, presupuesto, concepto, anio) VALUES (".$idMetasEstrategicas.",0, '".$gastoAnadirAccionCampo."', ".$anio.")");
                         $sql3=("SELECT idPresupuestoMetas FROM PresupuestoMetas WHERE idMetasEstrategicas = ".$idMetasEstrategicas." AND anio = ".$anio);
                         $insert = true;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql2=("UPDATE PresupuestoMetas  SET concepto = '".$gastoAnadirAccionCampo."' WHERE idPresupuestoMetas = ".$row3["idPresupuestoMetas"]);
+                                $sql2=("SELECT updatePresupuestoMetasConcepto('".$gastoAnadirAccionCampo."', ".$row3["idPresupuestoMetas"].");");
+                                //$sql2=("UPDATE PresupuestoMetas  SET concepto = '".$gastoAnadirAccionCampo."' WHERE idPresupuestoMetas = ".$row3["idPresupuestoMetas"]);
                                 $idPresupuestoMetas = $row3["idPresupuestoMetas"];
                                 $insert = false;
                             }
@@ -794,15 +796,16 @@ switch($servicio)
                         $idUsuarioCampo = $_SESSION["idUsuarioCampo"];
                         $idCampo = $_SESSION["idCampo"];
                         $idActividadesMetas = 0;
-                        $sql2=("INSERT INTO ActividadesMetas (idMetasEstrategicas, actividad,  anio) VALUES 
-                            (".$idMetasEstrategicas.", '".$actividadAnadirAccionCampo."', ".$anio.")");
+                        $sql2=("SELECT insertActividadesMetasIdMetasEstrategicas (".$idMetasEstrategicas.", '".$actividadAnadirAccionCampo."', ".$anio.")");
+                        //$sql2=("INSERT INTO ActividadesMetas (idMetasEstrategicas, actividad,  anio) VALUES (".$idMetasEstrategicas.", '".$actividadAnadirAccionCampo."', ".$anio.")");
                         $sql3=("SELECT idActividadesMetas FROM ActividadesMetas WHERE idMetasEstrategicas = ".$idMetasEstrategicas." AND anio = ".$anio);
                         $insert = true;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql2=("UPDATE ActividadesMetas  SET actividad = '".$actividadAnadirAccionCampo."' WHERE idActividadesMetas = ".$row3["idActividadesMetas"]);
+                                $sql2=("SELECT updateActividadesMetasActividad  ('".$actividadAnadirAccionCampo."', ".$row3["idActividadesMetas"].");");
+                                //$sql2=("UPDATE ActividadesMetas  SET actividad = '".$actividadAnadirAccionCampo."' WHERE idActividadesMetas = ".$row3["idActividadesMetas"]);
                                 $idActividadesMetas = $row3["idActividadesMetas"];
                                 $insert = false;
                             }
@@ -824,8 +827,8 @@ switch($servicio)
                         $lugarAnadirAccionIglesia = ($_POST['lugarAnadirAccionIglesia']);
                         $idActividadesIglesias = $_POST['idActividadesIglesias'];
                         $idUsuarioCampo = damePastorDeIglesia();
-                        $sql2=("INSERT INTO LugaresMetasIglesias  (idActividadesIglesias, idUsuarioCampo, idDepartamentosAccionesIglesias, lugar, anio, idGrupo) VALUES 
-                            (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$lugarAnadirAccionIglesia."', ".$anio.", ".$_SESSION["idGrupo"].")");
+                        $sql2=("SELECT insertLugaresMetasIglesiasIdActividadesIglesias (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$lugarAnadirAccionIglesia."', ".$anio.", ".$_SESSION["idGrupo"].")");
+                        //$sql2=("INSERT INTO LugaresMetasIglesias  (idActividadesIglesias, idUsuarioCampo, idDepartamentosAccionesIglesias, lugar, anio, idGrupo) VALUES (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$lugarAnadirAccionIglesia."', ".$anio.", ".$_SESSION["idGrupo"].")");
                         if($query2 = mysqli_query($recordset->conn,$sql2))
                         {
                             echo '{ "success" : 1 }';
@@ -859,14 +862,15 @@ switch($servicio)
                         $idCampo = $_SESSION["idCampo"];
                         $idMetasEstrategicas = 0;
                         $sql3=("SELECT idMetasEstrategicas FROM MetasEstrategicas2018 WHERE idDepartamentosAcciones = ".$idDepartamentosAcciones." AND idCampo = ".$_SESSION["idCampo"]." AND anio = ".$anio." AND idMetas2018 = ".$idMetas2018);
-                        $sql2=("INSERT INTO MetasEstrategicas2018  (idDepartamentosAcciones, idUsuarioCampo, metaNumero, indicador, idCampo, anio, idMetas2018) VALUES 
-                                    (".$idDepartamentosAcciones.", ".$idUsuarioCampo.", ".$valorNumero.", ".$indicador.", ".$idCampo.", ".$anio.", ".$idMetas2018.")");
+                        $sql2=("SELECT insertMetasEstrategicas2018IdDepartamentosAcciones (".$idDepartamentosAcciones.", ".$idUsuarioCampo.", ".$valorNumero.", ".$indicador.", ".$idCampo.", ".$anio.", ".$idMetas2018.")");
+                        //$sql2=("INSERT INTO MetasEstrategicas2018  (idDepartamentosAcciones, idUsuarioCampo, metaNumero, indicador, idCampo, anio, idMetas2018) VALUES (".$idDepartamentosAcciones.", ".$idUsuarioCampo.", ".$valorNumero.", ".$indicador.", ".$idCampo.", ".$anio.", ".$idMetas2018.")");
                         $insert = true;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql2=("UPDATE MetasEstrategicas2018  SET metaNumero = ".$valorNumero." WHERE idMetasEstrategicas = ".$row3["idMetasEstrategicas"]);
+                                $sql2=("SELECT updateMetasEstrategicas2018MetaNumero(".$valorNumero.", ".$row3["idMetasEstrategicas"].");");
+                                //$sql2=("UPDATE MetasEstrategicas2018  SET metaNumero = ".$valorNumero." WHERE idMetasEstrategicas = ".$row3["idMetasEstrategicas"]);
                                 $idMetasEstrategicas = $row3["idMetasEstrategicas"];
                                 $insert = false;
                             }
@@ -889,8 +893,8 @@ switch($servicio)
                         $idUsuarioCampo = damePastorDeIglesia();
                         $idMetasEstrategicasIglesias = 0;
                         $sql3=("SELECT idMetasEstrategicasIglesias FROM MetasEstrategicasIglesias WHERE idDepartamentosAccionesIglesias = ".$idDepartamentosAccionesIglesias." AND idGrupo = ".$_SESSION["idGrupo"]." AND anio = ".$anio);
-                        $sql2=("INSERT INTO MetasEstrategicasIglesias  (idUsuarioCampo, idDepartamentosAccionesIglesias, metaNumero, idGrupo, anio) VALUES 
-                                    (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$valorNumero.", ".$_SESSION["idGrupo"].", ".$anio.")");
+                         $sql2=("SELECT insertMetasEstrategicasIglesiasIdUsuarioCampo (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$valorNumero.", ".$_SESSION["idGrupo"].", ".$anio.")");
+                       // $sql2=("INSERT INTO MetasEstrategicasIglesias  (idUsuarioCampo, idDepartamentosAccionesIglesias, metaNumero, idGrupo, anio) VALUES (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$valorNumero.", ".$_SESSION["idGrupo"].", ".$anio.")");
                         $entre = 0;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
@@ -898,7 +902,8 @@ switch($servicio)
                             {
                                 $entre = 1;
                                 $idMetasEstrategicasIglesias = $row3["idMetasEstrategicasIglesias"];
-                                $sql2=("UPDATE MetasEstrategicasIglesias  SET metaNumero = ".$valorNumero." WHERE idMetasEstrategicasIglesias = ".$row3["idMetasEstrategicasIglesias"]);
+                                $sql2=("SELECT updateMetasEstrategicasIglesiasMetaNumero(".$valorNumero.", ".$row3["idMetasEstrategicasIglesias"].");");
+                                //$sql2=("UPDATE MetasEstrategicasIglesias  SET metaNumero = ".$valorNumero." WHERE idMetasEstrategicasIglesias = ".$row3["idMetasEstrategicasIglesias"]);
                             }
                             if($query2 = mysqli_query($recordset->conn,$sql2))
                             {
@@ -934,13 +939,14 @@ switch($servicio)
                         $presupuestoConceptoAccionIglesiaAnadir = ($_POST['presupuestoConceptoAccionIglesiaAnadir']);
                         $idUsuarioCampo = damePastorDeIglesia();
                         $sql3=("SELECT idPresupuestoMetasIglesias FROM PresupuestoMetasIglesias WHERE idDepartamentosAccionesIglesias = ".$idDepartamentosAccionesIglesias." AND idGrupo = ".$_SESSION["idGrupo"]." AND anio = ".$anio." AND idActividadesIglesias = ".$idActividadesIglesias);
-                        $sql2=("INSERT INTO PresupuestoMetasIglesias  (idActividadesIglesias, idUsuarioCampo, idDepartamentosAccionesIglesias, presupuesto, concepto, anio, idGrupo) VALUES 
-                                    (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$presupuestoAnadirAccionIglesia."', '".$presupuestoConceptoAccionIglesiaAnadir."', ".$anio.", ".$_SESSION["idGrupo"].")");
+                       $sql2=("SELECT insertPresupuestoMetasIglesiasIdActividadesIglesias (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$presupuestoAnadirAccionIglesia."', '".$presupuestoConceptoAccionIglesiaAnadir."', ".$anio.", ".$_SESSION["idGrupo"].")");
+                       //$sql2=("INSERT INTO PresupuestoMetasIglesias  (idActividadesIglesias, idUsuarioCampo, idDepartamentosAccionesIglesias, presupuesto, concepto, anio, idGrupo) VALUES (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$presupuestoAnadirAccionIglesia."', '".$presupuestoConceptoAccionIglesiaAnadir."', ".$anio.", ".$_SESSION["idGrupo"].")");
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql2=("UPDATE PresupuestoMetasIglesias  SET presupuesto = '".$presupuestoAnadirAccionIglesia."', concepto = '".$presupuestoConceptoAccionIglesiaAnadir."' WHERE idPresupuestoMetasIglesias = ".$row3["idPresupuestoMetasIglesias"]);
+                                $sql2=("SELECT updatePresupuestoMetasIglesiasPresupuesto('".$presupuestoAnadirAccionIglesia."', '".$presupuestoConceptoAccionIglesiaAnadir."', ".$row3["idPresupuestoMetasIglesias"].");");
+                                //$sql2=("UPDATE PresupuestoMetasIglesias  SET presupuesto = '".$presupuestoAnadirAccionIglesia."', concepto = '".$presupuestoConceptoAccionIglesiaAnadir."' WHERE idPresupuestoMetasIglesias = ".$row3["idPresupuestoMetasIglesias"]);
                             }
                             if($query2 = mysqli_query($recordset->conn,$sql2))
                             {
@@ -990,20 +996,22 @@ switch($servicio)
                         $idUsuarioCampo = damePastorDeIglesia();
                         $sql3=("SELECT idActividadesIglesias FROM ActividadesIglesias WHERE idDepartamentosAccionesIglesias = ".$idDepartamentosAccionesIglesias." AND idGrupo = ".$_SESSION["idGrupo"]." AND anio = ".$anio." AND idActividadesSugerentesIglesia = ".$idActividadesSugerentesIglesia);
                         $insert = true;
-                        $sql2=("INSERT INTO ActividadesIglesias  (idUsuarioCampo, idDepartamentosAccionesIglesias, idActividadesSugerentesIglesia, anio, idGrupo, actividadOtra) VALUES 
-                                    (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$idActividadesSugerentesIglesia.", ".$anio.", ".$_SESSION["idGrupo"].", '".$actividadOtra."')");
+                        $sql2=("SELECT insertActividadesIglesiasIdUsuarioCampoActividadOtra (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$idActividadesSugerentesIglesia.", ".$anio.", ".$_SESSION["idGrupo"].", '".$actividadOtra."')");
+                        //$sql2=("INSERT INTO ActividadesIglesias  (idUsuarioCampo, idDepartamentosAccionesIglesias, idActividadesSugerentesIglesia, anio, idGrupo, actividadOtra) VALUES (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$idActividadesSugerentesIglesia.", ".$anio.", ".$_SESSION["idGrupo"].", '".$actividadOtra."')");
                         $idActividadesIglesias = -1;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
                                 $idActividadesIglesias = $row3["idActividadesIglesias"];
-                                $sql2=("UPDATE ActividadesIglesias SET actividadOtra = '".$actividadOtra."', idUsuarioCampo = ".$idUsuarioCampo." WHERE idActividadesIglesias = ".$idActividadesIglesias."");
+                                $sql2=("SELECT updateActividadesIglesiasActividadOtra('".$actividadOtra."', ".$idUsuarioCampo.", ".$idActividadesIglesias.");");
+                                //$sql2=("UPDATE ActividadesIglesias SET actividadOtra = '".$actividadOtra."', idUsuarioCampo = ".$idUsuarioCampo." WHERE idActividadesIglesias = ".$idActividadesIglesias."");
                                 $insert = false;
                             }
                             if($valor==0)
                             {
-                                $sql2=("DELETE FROM ActividadesIglesias WHERE idActividadesIglesias = ".$idActividadesIglesias);
+                                $sql2=("SELECT deleteActividadesIglesiasIdActIgl (".$idActividadesIglesias.");");
+                                //$sql2=("DELETE FROM ActividadesIglesias WHERE idActividadesIglesias = ".$idActividadesIglesias);
                                 $insert = false;
                             }
                             if($query2 = mysqli_query($recordset->conn,$sql2))
@@ -1059,15 +1067,17 @@ switch($servicio)
                         $sql2="";
                         if($idFechasMetasIglesias==0)//insert
                         {
-                            $sql2=("INSERT INTO FechasMetasIglesias  (idActividadesIglesias, idUsuarioCampo, idDepartamentosAccionesIglesias, fecha, anio, idGrupo, fechaFinal) VALUES 
-                            (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$calendarioAccionIglesiaFechaInicial."', ".$anio.", ".$_SESSION["idGrupo"].", '".$calendarioAccionIglesiaFechaFinal."')");
+                            $sql2=("SELECT insertFechasMetasIglesiasIdActividadesIglesias (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$calendarioAccionIglesiaFechaInicial."', ".$anio.", ".$_SESSION["idGrupo"].", '".$calendarioAccionIglesiaFechaFinal."')");
+                            //$sql2=("INSERT INTO FechasMetasIglesias  (idActividadesIglesias, idUsuarioCampo, idDepartamentosAccionesIglesias, fecha, anio, idGrupo, fechaFinal) VALUES (".$idActividadesIglesias.", ".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", '".$calendarioAccionIglesiaFechaInicial."', ".$anio.", ".$_SESSION["idGrupo"].", '".$calendarioAccionIglesiaFechaFinal."')");
                         }
                         else
                         {
-                            $sql2=("UPDATE FechasMetasIglesias SET fecha = '".$calendarioAccionIglesiaFechaInicial."', fechaFinal= '".$calendarioAccionIglesiaFechaFinal."' WHERE idFechasMetasIglesias = ".$idFechasMetasIglesias);
+                            $sql2=("SELECT updateFechasMetasIglesiasFecha ('".$calendarioAccionIglesiaFechaInicial."', '".$calendarioAccionIglesiaFechaFinal."', ".$idFechasMetasIglesias.")");
+                            //$sql2=("UPDATE FechasMetasIglesias SET fecha = '".$calendarioAccionIglesiaFechaInicial."', fechaFinal= '".$calendarioAccionIglesiaFechaFinal."' WHERE idFechasMetasIglesias = ".$idFechasMetasIglesias);
                             if($calendarioAccionIglesiaFechaFinal=="")
                             {
-                                $sql2=("DELETE FROM FechasMetasIglesias WHERE idFechasMetasIglesias = ".$idFechasMetasIglesias);
+                                $sql2=("SELECT deleteFechasMetasIglesiasIdFchasMetIgl(".$idFechasMetasIglesias.");");
+                                //$sql2=("DELETE FROM FechasMetasIglesias WHERE idFechasMetasIglesias = ".$idFechasMetasIglesias);
                             }
                         }
                        // $sql3=("SELECT idFechasMetasIglesias FROM FechasMetasIglesias WHERE idDepartamentosAccionesIglesias = ".$idDepartamentosAccionesIglesias." AND idGrupo = ".$_SESSION["idGrupo"]." AND anio = ".$anio." AND idActividadesIglesias = ".$idActividadesIglesias);
@@ -1155,7 +1165,8 @@ switch($servicio)
                     case 'eliminarCalendarioAccionCampo':    
                         checarSesionUsuarios();
                         $idFechasMetas = $_POST['idFechasMetas'];
-                        $sql2=("DELETE FROM FechasMetas  WHERE  idFechasMetas = ".$idFechasMetas);
+                        $sql2=("SELECT deleteFechasMetasIdFchaMet (".$idFechasMetas.");");
+                        //$sql2=("DELETE FROM FechasMetas  WHERE  idFechasMetas = ".$idFechasMetas);
                         if($query2 = mysqli_query($recordset->conn,$sql2))
                         {
                             echo '{ "success" : 1 }';
@@ -1165,7 +1176,8 @@ switch($servicio)
                     case 'eliminarCalendarioAccionIglesia':    
                         checarSesionUsuarios();
                         $idFechasMetasIglesias = $_POST['idFechasMetasIglesias'];
-                        $sql2=("DELETE FROM FechasMetasIglesias  WHERE  idFechasMetasIglesias = ".$idFechasMetasIglesias);
+                        $sql2=("SELECT deleteFechasMetasIglesiasIdFchasMetIgl (".$idFechasMetasIglesias.");");
+                        //$sql2=("DELETE FROM FechasMetasIglesias  WHERE  idFechasMetasIglesias = ".$idFechasMetasIglesias);
                         if($query2 = mysqli_query($recordset->conn,$sql2))
                         {
                             echo '{ "success" : 1 }';
@@ -5620,10 +5632,12 @@ switch($servicio)
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql=("UPDATE EvaluacionCampo2018 SET Primero =  '".$primero."', Segundo = ".$segundo." , Tercero = ".$tercero." , Cuarto = ".$cuarto." WHERE idMetasEstrategicas = ".$idMetasEstrategicas);
+                                $sql=("SELECT updateEvaluacionCampo2018Primero('".$primero."', ".$segundo.", ".$tercero." ,".$cuarto.", ".$idMetasEstrategicas.");");
+                                //$sql=("UPDATE EvaluacionCampo2018 SET Primero =  '".$primero."', Segundo = ".$segundo." , Tercero = ".$tercero." , Cuarto = ".$cuarto." WHERE idMetasEstrategicas = ".$idMetasEstrategicas);
                                 if($idE!=0)
                                 {
-                                    $sql=("UPDATE EvaluacionCampo2018 SET Primero =  '".$primero."', Segundo = ".$segundo." , Tercero = ".$tercero." , Cuarto = ".$cuarto." WHERE idEvaluacionCampo = ".$idE);
+                                    $sql=("SELECT updateEvaluacionCampo2018idEvaluacionCampo('".$primero."', ".$segundo.", ".$tercero." ,".$cuarto.", ".$idE.");");
+                                    //$sql=("UPDATE EvaluacionCampo2018 SET Primero =  '".$primero."', Segundo = ".$segundo." , Tercero = ".$tercero." , Cuarto = ".$cuarto." WHERE idEvaluacionCampo = ".$idE);
                                     
                                 }
                                 if($query = mysqli_query($recordset->conn,$sql))
@@ -5635,8 +5649,8 @@ switch($servicio)
                             }
                             else
                             {
-                                $sql2=("INSERT INTO EvaluacionCampo2018 (idMetasEstrategicas, Primero, Segundo, Tercero, Cuarto) VALUES 
-                                (".$idMetasEstrategicas.", ".$primero.", ".$segundo.", ".$tercero.", ".$cuarto.")");
+                                $sql2=("SELECT insertEvaluacionCampo2018IdMetasEstrategicas(".$idMetasEstrategicas.", ".$primero.", ".$segundo.", ".$tercero.", ".$cuarto.")");
+                                //$sql2=("INSERT INTO EvaluacionCampo2018 (idMetasEstrategicas, Primero, Segundo, Tercero, Cuarto) VALUES (".$idMetasEstrategicas.", ".$primero.", ".$segundo.", ".$tercero.", ".$cuarto.")");
                                 if($query2 = mysqli_query($recordset->conn,$sql2))
                                 {
                                     echo '{ "success" : 1 }';
@@ -5660,7 +5674,8 @@ switch($servicio)
                         {
                             if($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql=("UPDATE EvaluacionIglesias SET Primero =  '".$primero."', Segundo = ".$segundo." , Tercero = ".$tercero." , Cuarto = ".$cuarto." WHERE idMetasEstrategicasIglesias = ".$idMetasEstrategicasIglesias);
+                                $sql=("SELECT updateEvaluacionIglesiasidMetasEstrategicasIglesias SET ('".$primero."', ".$segundo.", ".$tercero." ,".$cuarto.", ".$idMetasEstrategicasIglesias.");");
+                                //$sql=("UPDATE EvaluacionIglesias SET Primero =  '".$primero."', Segundo = ".$segundo." , Tercero = ".$tercero." , Cuarto = ".$cuarto." WHERE idMetasEstrategicasIglesias = ".$idMetasEstrategicasIglesias);
                                 if($query = mysqli_query($recordset->conn,$sql))
                                 {
                                     echo '{ "success" : 1 }';
@@ -5669,8 +5684,8 @@ switch($servicio)
                             }
                             else
                             {
-                                $sql2=("INSERT INTO EvaluacionIglesias (idMetasEstrategicasIglesias, Primero, Segundo, Tercero, Cuarto) VALUES 
-                                (".$idMetasEstrategicasIglesias.", ".$primero.", ".$segundo.", ".$tercero.", ".$cuarto.")");
+                                $sql2=("SELECT insertEvaluacionIglesiasIdMetasEstrategicasIglesias(".$idMetasEstrategicasIglesias.", ".$primero.", ".$segundo.", ".$tercero.", ".$cuarto.")");
+                                //$sql2=("INSERT INTO EvaluacionIglesias (idMetasEstrategicasIglesias, Primero, Segundo, Tercero, Cuarto) VALUES (".$idMetasEstrategicasIglesias.", ".$primero.", ".$segundo.", ".$tercero.", ".$cuarto.")");
                                 if($query2 = mysqli_query($recordset->conn,$sql2))
                                 {
                                     echo '{ "success" : 1 }';
@@ -8872,8 +8887,8 @@ LEFT JOIN ActividadesIglesias a on f.idDepartamentosAccionesIglesias = a.idDepar
                             }
                             else
                             {
-                                $sql2=("INSERT INTO DepartamentosUsuarios (idDepartamento, idUsuarioCampo) VALUES
-                                (".$idDepartamento.", ".$idUsuarioCampo.")");
+                                $sql2=("SELECT insertDepartamentosUsuariosIdDepartamento (".$idDepartamento.", ".$idUsuarioCampo.")");
+                                //$sql2=("INSERT INTO DepartamentosUsuarios (idDepartamento, idUsuarioCampo) VALUES (".$idDepartamento.", ".$idUsuarioCampo.")");
                                 if($query2 = mysqli_query($recordset->conn,$sql2))
                                 {
                                     echo '{ "success" : 1 }';
@@ -10004,7 +10019,8 @@ LEFT JOIN ActividadesIglesias a on f.idDepartamentosAccionesIglesias = a.idDepar
                     case 'eliminaAsignacion':    
                         checarSesionUsuarios();
                         $idDistritosUsuarios = $_POST["idDistritosUsuarios"];
-                        $sql=("DELETE FROM DistritosUsuarios WHERE idDistritosUsuarios = ".$idDistritosUsuarios);
+                        $sql=("SELECT deleteDistritosUsuariosIdDistritUser (".$idDistritosUsuarios.");");
+                        //$sql=("DELETE FROM DistritosUsuarios WHERE idDistritosUsuarios = ".$idDistritosUsuarios);
                         if($query = mysqli_query($recordset->conn,$sql))
                         {
                             echo '{ "success" : 1 }';
@@ -10195,7 +10211,8 @@ LEFT JOIN ActividadesIglesias a on f.idDepartamentosAccionesIglesias = a.idDepar
                         $nombre = ($_POST['nombre']);
                         $correo = $_POST['correo'];
                         $idUsuarioCampo = $_POST['idUsuarioCampo'];
-                         $sql=("UPDATE UsuariosCampos set nombre =  '".$nombre."' , correo = '".$correo."' WHERE  idUsuarioCampo = ".$idUsuarioCampo);
+                         $sql=("SELECT updateUsuariosCamposNombre('".$nombre."', '".$correo."', ".$idUsuarioCampo.");");
+                         //$sql=("UPDATE UsuariosCampos set nombre =  '".$nombre."' , correo = '".$correo."' WHERE  idUsuarioCampo = ".$idUsuarioCampo);
                         if($query = mysqli_query($recordset->conn,$sql))
                         {
                             echo '{ "success" : 2 }';
@@ -10220,7 +10237,8 @@ LEFT JOIN ActividadesIglesias a on f.idDepartamentosAccionesIglesias = a.idDepar
                                     exit(0);
                                 }
                             }
-                            $sql=("INSERT INTO UsuariosCampos (nombre, correo, pass, idCampo, departamento) VALUES ('".$nombre."','".$correo."','".$passSHA1."',".$_SESSION["idCampo"].", -1 )");
+                            $sql=("SELECT insertUsuariosCamposNombre ('".$nombre."','".$correo."','".$passSHA1."',".$_SESSION["idCampo"].", -1 )");
+                            //$sql=("INSERT INTO UsuariosCampos (nombre, correo, pass, idCampo, departamento) VALUES ('".$nombre."','".$correo."','".$passSHA1."',".$_SESSION["idCampo"].", -1 )");
                             if($query = mysqli_query($recordset->conn,$sql))
                             {
                                 //mandar correo con contraseña!
