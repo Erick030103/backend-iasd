@@ -889,8 +889,8 @@ switch($servicio)
                         $idUsuarioCampo = damePastorDeIglesia();
                         $idMetasEstrategicasIglesias = 0;
                         $sql3=("SELECT idMetasEstrategicasIglesias FROM MetasEstrategicasIglesias WHERE idDepartamentosAccionesIglesias = ".$idDepartamentosAccionesIglesias." AND idGrupo = ".$_SESSION["idGrupo"]." AND anio = ".$anio);
-                        $sql2=("INSERT INTO MetasEstrategicasIglesias  (idUsuarioCampo, idDepartamentosAccionesIglesias, metaNumero, idGrupo, anio) VALUES 
-                                    (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$valorNumero.", ".$_SESSION["idGrupo"].", ".$anio.")");
+                         $sql2=("SELECT insertMetasEstrategicasIglesiasIdUsuarioCampo (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$valorNumero.", ".$_SESSION["idGrupo"].", ".$anio.")");
+                        //$sql2=("INSERT INTO MetasEstrategicasIglesias  (idUsuarioCampo, idDepartamentosAccionesIglesias, metaNumero, idGrupo, anio) VALUES (".$idUsuarioCampo.", ".$idDepartamentosAccionesIglesias.", ".$valorNumero.", ".$_SESSION["idGrupo"].", ".$anio.")");
                         $entre = 0;
                         if($query3 = mysqli_query($recordset->conn,$sql3))
                         {
