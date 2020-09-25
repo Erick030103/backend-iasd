@@ -5745,20 +5745,13 @@ switch($servicio)
                                 array_push($actividadesSugerentes, $rowY);
                             }
                         }
-                        
-                        $sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo
-                            FROM DepartamentosAccionesIglesias d
-                            INNER JOIN Motores m on m.idMotor = d.motor
-                            INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos
-                            WHERE d.idDepartamento = ".$idDepartamento." AND d.anio = ".$anio." order by d.idDepartamentosAccionesIglesias asc");
+                        $sql2=("SELECT  accion, accionPasado, idDepartamentosAccionesIglesias, indicador, motor, objetivo, tipo FROM verAccionesDeIglesia_sql2 WHERE idDepartamento = ".$idDepartamento." AND anio = ".$anio." order by idDepartamentosAccionesIglesias asc");
+                        //$sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo FROM DepartamentosAccionesIglesias d INNER JOIN Motores m on m.idMotor = d.motor INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos WHERE d.idDepartamento = ".$idDepartamento." AND d.anio = ".$anio." order by d.idDepartamentosAccionesIglesias asc");
                         if(intval($tipo)==3)//todos
                         {
-                            $sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo, dd.nombre
-                            FROM DepartamentosAccionesIglesias d
-                            INNER JOIN Motores m on m.idMotor = d.motor
-                            INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos
-                            INNER JOIN Departamentos dd on d.idDepartamento = dd.idDepartamento
-                            WHERE d.anio = ".$anio." AND d.tipo = 2 order by d.idDepartamentosAccionesIglesias asc");
+                            $sql2=("SELECT accion, accionPasado, idDepartamentosAccionesIglesias, indicador, motor, objetivo, tipo, nombre FROM verAccionesDeIglesiaDepartamentosAccionesIglesias WHERE anio = ".$anio." AND tipo = 2 order by idDepartamentosAccionesIglesias asc");
+
+                            //$sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo, dd.nombre FROM DepartamentosAccionesIglesias d INNER JOIN Motores m on m.idMotor = d.motor INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos INNER JOIN Departamentos dd on d.idDepartamento = dd.idDepartamento WHERE d.anio = ".$anio." AND d.tipo = 2 order by d.idDepartamentosAccionesIglesias asc");
                         }
                         if($query2 = mysqli_query($recordset->conn,$sql2))
                         {
@@ -5837,12 +5830,9 @@ switch($servicio)
                                     }
                                 }
                                 $rowX["actividades"] = array();
-                                $sql4=("SELECT  a.idActividadesIglesias, a.actividadOtra, a.idActividadesSugerentesIglesia, asi.archivo,IFNULL(asi.titulo,'') as titulo, IFNULL(asi.descripcion,'') as descripcion, asi.ene, asi.feb, asi.mar, asi.abr, asi.may, asi.jun, asi.jul, asi.ago, asi.sep, asi.oct, asi.nov, asi.dic
-                                            FROM ActividadesIglesias a
-                                            LEFT JOIN ActividadesSugerentesIglesia asi on a.idActividadesSugerentesIglesia = asi.idActividadesSugerentesIglesia
-                                            WHERE a.idDepartamentosAccionesIglesias = ".$row2["idDepartamentosAccionesIglesias"]."
-                                            AND a.anio = ".$anio." AND a.idGrupo = ".$idGrupo." 
-                                             order by a.idActividadesIglesias asc");
+                                $sql4=("SELECT idActividadesIglesias, actividadOtra, idActividadesSugerentesIglesia, archivo,IFNULL(titulo,'') as titulo, IFNULL(descripcion,'') as descripcion, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic FROM verAccionesDeIglesiaActividadesIglesias WHERE idDepartamentosAccionesIglesias = ".$row2["idDepartamentosAccionesIglesias"]." AND anio = ".$anio." AND idGrupo = ".$idGrupo." order by idActividadesIglesias asc");
+
+                                //$sql4=("SELECT  a.idActividadesIglesias, a.actividadOtra, a.idActividadesSugerentesIglesia, asi.archivo,IFNULL(asi.titulo,'') as titulo, IFNULL(asi.descripcion,'') as descripcion, asi.ene, asi.feb, asi.mar, asi.abr, asi.may, asi.jun, asi.jul, asi.ago, asi.sep, asi.oct, asi.nov, asi.dic FROM ActividadesIglesias a LEFT JOIN ActividadesSugerentesIglesia asi on a.idActividadesSugerentesIglesia = asi.idActividadesSugerentesIglesia WHERE a.idDepartamentosAccionesIglesias = ".$row2["idDepartamentosAccionesIglesias"]." AND a.anio = ".$anio." AND a.idGrupo = ".$idGrupo." order by a.idActividadesIglesias asc");
                                 //echo $sql4;
 
                                 if($query4 = mysqli_query($recordset->conn,$sql4))
@@ -5878,10 +5868,9 @@ switch($servicio)
                                         }
                                         else
                                         {
-                                            $sql41=("SELECT a.actividadOtra, aa.titulo
-                                                FROM ActividadesIglesias a
-                                                INNER JOIN ActividadesSugerentesIglesia aa on aa.idActividadesSugerentesIglesia = a.idActividadesSugerentesIglesia
-                                                WHERE a.idActividadesIglesias = ".$row4["idActividadesIglesias"]."");
+                                            $sql41=("SELECT actividadOtra, titulo FROM verAccionesDeIglesiaActividadesSugerentesIglesia WHERE idActividadesIglesias = ".$row4["idActividadesIglesias"].")");
+
+                                            //$sql41=("SELECT a.actividadOtra, aa.titulo FROM ActividadesIglesias a INNER JOIN ActividadesSugerentesIglesia aa on aa.idActividadesSugerentesIglesia = a.idActividadesSugerentesIglesia WHERE a.idActividadesIglesias = ".$row4["idActividadesIglesias"]."");
                                             if($query41 = mysqli_query($recordset->conn,$sql41))
                                             {
                                                 if($row41=mysqli_fetch_array($query41,MYSQLI_ASSOC))
@@ -5916,10 +5905,9 @@ switch($servicio)
                                         }
                                         else
                                         {
-                                            $sql41=("SELECT a.actividadOtra, aa.titulo
-                                                FROM ActividadesIglesias a
-                                                INNER JOIN ActividadesSugerentesIglesia aa on aa.idActividadesSugerentesIglesia = a.idActividadesSugerentesIglesia
-                                                WHERE a.idActividadesIglesias = ".$row4["idActividadesIglesias"]."");
+                                            $sql41=("SELECT actividadOtra, titulo FROM verAccionesDeIglesiaActividadesSugerentesIglesia WHERE idActividadesIglesias = ".$row4["idActividadesIglesias"].")");
+
+                                            //$sql41=("SELECT a.actividadOtra, aa.titulo FROM ActividadesIglesias a INNER JOIN ActividadesSugerentesIglesia aa on aa.idActividadesSugerentesIglesia = a.idActividadesSugerentesIglesia WHERE a.idActividadesIglesias = ".$row4["idActividadesIglesias"]."");
                                             if($query41 = mysqli_query($recordset->conn,$sql41))
                                             {
                                                 if($row41=mysqli_fetch_array($query41,MYSQLI_ASSOC))
@@ -5954,10 +5942,9 @@ switch($servicio)
                                         }
                                         else
                                         {
-                                            $sql41=("SELECT a.actividadOtra, aa.titulo
-                                                FROM ActividadesIglesias a
-                                                INNER JOIN ActividadesSugerentesIglesia aa on aa.idActividadesSugerentesIglesia = a.idActividadesSugerentesIglesia
-                                                WHERE a.idActividadesIglesias = ".$row4["idActividadesIglesias"]."");
+                                        	$sql41=("SELECT actividadOtra, titulo FROM verAccionesDeIglesiaActividadesSugerentesIglesia WHERE idActividadesIglesias = ".$row4["idActividadesIglesias"].")");
+
+                                            //$sql41=("SELECT a.actividadOtra, aa.titulo FROM ActividadesIglesias a INNER JOIN ActividadesSugerentesIglesia aa on aa.idActividadesSugerentesIglesia = a.idActividadesSugerentesIglesia WHERE a.idActividadesIglesias = ".$row4["idActividadesIglesias"]."");
                                             if($query41 = mysqli_query($recordset->conn,$sql41))
                                             {
                                                 if($row41=mysqli_fetch_array($query41,MYSQLI_ASSOC))
@@ -5998,10 +5985,10 @@ switch($servicio)
                         {
                             while($row44=mysqli_fetch_array($query44,MYSQLI_ASSOC))
                             {
-                                $sql3=("SELECT IFNULL(me.metaNumero,-1) as metaNumero, IFNULL(me.idMetasEstrategicas,0) as idMetasEstrategicas, me.idCampo, c.nombre
-                                    FROM MetasEstrategicas2018  me
-                                    INNER JOIN Campos c on c.idCampo = me.idCampo
-                                    WHERE me.anio = ".$anio." AND me.idCampo in (".$idCampo.") AND me.idMetas2018 = ".$row44["idMetas2018"]);
+                              
+                                $sql3=("SELECT IFNULL(metaNumero,-1) as metaNumero, IFNULL(idMetasEstrategicas,0) as idMetasEstrategicas, idCampo, nombre FROM verAccionesDeCampoEvaluacionCampoDetalleMetEstrat2018 WHERE anio = ".$anio." AND idCampo in (".$idCampo.") AND idMetas2018 = ".$row44["idMetas2018"].")");
+
+                                //$sql3=("SELECT IFNULL(me.metaNumero,-1) as metaNumero, IFNULL(me.idMetasEstrategicas,0) as idMetasEstrategicas, me.idCampo, c.nombre FROM MetasEstrategicas2018  me INNER JOIN Campos c on c.idCampo = me.idCampo WHERE me.anio = ".$anio." AND me.idCampo in (".$idCampo.") AND me.idMetas2018 = ".$row44["idMetas2018"]);
                                 
                                 if($query3 = mysqli_query($recordset->conn,$sql3))
                                 {
@@ -6057,21 +6044,18 @@ switch($servicio)
                             $procesoResultado=$_POST["proceso"];
                         }
                        
-                         $sql2=("SELECT DISTINCT o.idObjetivosEspecificos, o.objetivo , o.motor
-                            FROM ObjetivosEspecificos o 
-                            INNER JOIN AccionesEstrategicas2018 a on a.idObjetivosEspecificos = o.idObjetivosEspecificos
-                            INNER JOIN DepartamentosAcciones2018 d on d.idAccionEstrategica = a.idAccionEstrategica
-                            WHERE o.motor in (1,2,3,4,5) AND d.idDepartamento = ".$idDepartamento." AND a.tipo = ".$tipo." AND d.anio = ".$anio." order by o.motor asc, o.idObjetivosEspecificos asc");
+                         $sql2=("SELECT DISTINCT idObjetivosEspecificos, objetivo , motor FROM verAccionesDeCampoEvaluacionCampoObjetivosEspecificos WHERE motor in (1,2,3,4,5) AND idDepartamento = ".$idDepartamento." AND tipo = ".$tipo." AND anio = ".$anio." order by motor asc, idObjetivosEspecificos asc");
+
+                         //$sql2=("SELECT DISTINCT o.idObjetivosEspecificos, o.objetivo , o.motor FROM ObjetivosEspecificos o INNER JOIN AccionesEstrategicas2018 a on a.idObjetivosEspecificos = o.idObjetivosEspecificos INNER JOIN DepartamentosAcciones2018 d on d.idAccionEstrategica = a.idAccionEstrategica WHERE o.motor in (1,2,3,4,5) AND d.idDepartamento = ".$idDepartamento." AND a.tipo = ".$tipo." AND d.anio = ".$anio." order by o.motor asc, o.idObjetivosEspecificos asc");
 
                                                        
                         if($query2 = mysqli_query($recordset->conn,$sql2))
                         {
                             while($row2=mysqli_fetch_array($query2,MYSQLI_ASSOC))
                             {
-                                $sql33=("SELECT a.accion, a.accionPasado, a.idAccionEstrategica, d.idDepartamentosAcciones, a.indicador, a.procesoResultado, d.idDepartamento
-                                    FROM AccionesEstrategicas2018 a
-                                    INNER JOIN DepartamentosAcciones2018 d on d.idAccionEstrategica = a.idAccionEstrategica
-                                    WHERE a.idObjetivosEspecificos = ".$row2["idObjetivosEspecificos"]."  AND d.idDepartamento = ".$idDepartamento." AND a.tipo = ".$tipo." AND d.anio = ".$anio."  order by a.idAccionEstrategica asc");
+                                $sql33=("SELECT accion, accionPasado, idAccionEstrategica, idDepartamentosAcciones, indicador, procesoResultado, idDepartamento FROM verAccionesDeCampoEvaluacionCampoAccionesEstrategicas2018 WHERE idObjetivosEspecificos = ".$row2["idObjetivosEspecificos"]."  AND idDepartamento = ".$idDepartamento." AND tipo = ".$tipo." AND anio = ".$anio."  order by idAccionEstrategica asc");
+
+                                //$sql33=("SELECT a.accion, a.accionPasado, a.idAccionEstrategica, d.idDepartamentosAcciones, a.indicador, a.procesoResultado, d.idDepartamento FROM AccionesEstrategicas2018 a INNER JOIN DepartamentosAcciones2018 d on d.idAccionEstrategica = a.idAccionEstrategica WHERE a.idObjetivosEspecificos = ".$row2["idObjetivosEspecificos"]."  AND d.idDepartamento = ".$idDepartamento." AND a.tipo = ".$tipo." AND d.anio = ".$anio."  order by a.idAccionEstrategica asc");
                                 if($procesoResultado!=0)
                                 {
                                     $sql33=("SELECT a.accion, a.accionPasado, a.idAccionEstrategica, d.idDepartamentosAcciones, a.indicador, a.procesoResultado, d.idDepartamento
