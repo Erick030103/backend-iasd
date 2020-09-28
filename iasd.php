@@ -108,11 +108,8 @@ function damePastorDeIglesia()
     $regresaID = 0;
     $recordsetAux = new connectionMinisterial();
     
-    $sql3X=("SELECT du.idUsuarioCampo
-        FROM Grupos g
-        INNER JOIN Distritos d on g.idDistrito = d.idDistrito
-        INNER JOIN DistritosUsuarios du on d.idDistrito = du.idDistrito
-         WHERE g.idGrupo = ".$_SESSION["idGrupo"]);
+    $sql3X=("SELECT idGrupo, idUsuarioCampo FROM verAccionesDeGrupos WHERE idGrupo = ".$_SESSION["idGrupo"].")");
+    //$sql3X=("SELECT du.idUsuarioCampo FROM Grupos g INNER JOIN Distritos d on g.idDistrito = d.idDistrito INNER JOIN DistritosUsuarios du on d.idDistrito = du.idDistrito WHERE g.idGrupo = ".$_SESSION["idGrupo"]);
     if($query3X = mysqli_query($recordsetAux->conn,$sql3X))
     {
         if($row3X=mysqli_fetch_array($query3X,MYSQLI_ASSOC))
@@ -265,13 +262,9 @@ switch($servicio)
         case 'notifications':
                 switch($accion)
                 {
-                    case 'sube2020': 
-                     $sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo, dd.nombre
-                            FROM DepartamentosAccionesIglesias d
-                            INNER JOIN Motores m on m.idMotor = d.motor
-                            INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos
-                            INNER JOIN Departamentos dd on d.idDepartamento = dd.idDepartamento
-                            WHERE d.anio = 2020  order by d.idDepartamentosAccionesIglesias asc");
+                    case 'sube2020':
+                    $sql2=("SELECT anio, accion, accionPasado, idDepartamentosAccionesIglesias, indicador, motor, objetivo, tipo, nombre FROM verAccionesDeDepartamentosAccionesIglesias WHERE anio = 2020  order by idDepartamentosAccionesIglesias asc");
+                     //$sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo, dd.nombre FROM DepartamentosAccionesIglesias d INNER JOIN Motores m on m.idMotor = d.motor INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos INNER JOIN Departamentos dd on d.idDepartamento = dd.idDepartamento WHERE d.anio = 2020  order by d.idDepartamentosAccionesIglesias asc");
                     if($query2 = mysqli_query($recordset->conn,$sql2))
                     {
                         while($row2=mysqli_fetch_array($query2,MYSQLI_ASSOC))
@@ -283,12 +276,8 @@ switch($servicio)
                             
                         }
                     }
-                    $sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo, dd.nombre
-                            FROM DepartamentosAccionesIglesias d
-                            INNER JOIN Motores m on m.idMotor = d.motor
-                            INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos
-                            INNER JOIN Departamentos dd on d.idDepartamento = dd.idDepartamento
-                            WHERE d.anio = 2020  order by d.idDepartamentosAccionesIglesias asc");
+                    $sql2=("SELECT anio, accion, accionPasado, idDepartamentosAccionesIglesias, indicador, motor, objetivo, tipo, nombre FROM verAccionesDeDepartamentosAccionesIglesias WHERE anio = 2020  order by idDepartamentosAccionesIglesias asc");
+                   //$sql2=("SELECT d.accion, d.accionPasado, d.idDepartamentosAccionesIglesias, d.indicador, m.motor, o.objetivo, d.tipo, dd.nombre FROM DepartamentosAccionesIglesias d INNER JOIN Motores m on m.idMotor = d.motor INNER JOIN ObjetivosEspecificos o on o.idObjetivosEspecificos = d.idObjetivosEspecificos INNER JOIN Departamentos dd on d.idDepartamento = dd.idDepartamento WHERE d.anio = 2020  order by d.idDepartamentosAccionesIglesias asc");
                     echo $sql2."<br><br>\n\n";
                     if($query2 = mysqli_query($recordset->conn,$sql2))
                     {
@@ -432,11 +421,8 @@ switch($servicio)
                         
 
                         $inventario = array();
-                         $sql2=('SELECT o.accion, o.indicador, o.idDepartamentosAccionesIglesias, m.motor
-                            FROM DepartamentosAccionesIglesias o
-                            INNER JOIN Motores m on m.idMotor = o.motor
-                            WHERE o.idDepartamento = '.$idDepartamento.'
-                            order by o.motor asc, o.idDepartamentosAccionesIglesias asc');                        
+                        $sql2=('SELECT accion, indicador, idDepartamentosAccionesIglesias, motor FROM verAccionesDeDepartamentosAccionesIglesiasIdDepartamento WHERE idDepartamento = '.$idDepartamento.' order by o.motor asc, o.idDepartamentosAccionesIglesias asc');
+                         //$sql2=('SELECT o.accion, o.indicador, o.idDepartamentosAccionesIglesias, m.motor FROM DepartamentosAccionesIglesias o INNER JOIN Motores m on m.idMotor = o.motor WHERE o.idDepartamento = '.$idDepartamento.' order by o.motor asc, o.idDepartamentosAccionesIglesias asc');                        
                         if($query2 = mysqli_query($recordset->conn,$sql2))
                         {
                             while($row2=mysqli_fetch_array($query2,MYSQLI_ASSOC))
@@ -497,10 +483,8 @@ switch($servicio)
                         checarSesionUsuarios();
                         $lista = array();
                         $disponibles = array();
-                        $sql=("SELECT u.idUsuarioCampo, u.nombre 
-                                FROM UsuariosCampos u
-                                LEFT JOIN DepartamentosUsuarios d on u.idUsuarioCampo = d.idUsuarioCampo
-                                 WHERE d.idUsuarioCampo IS NULL OR u.departamento = 0");
+                        $sql=("SELECT idUsuarioCampo, nombre FROM verAccionesDeUsuariosCampos WHERE idUsuarioCampo IS NULL OR departamento = 0");
+                        //$sql=("SELECT u.idUsuarioCampo, u.nombre FROM UsuariosCampos u LEFT JOIN DepartamentosUsuarios d on u.idUsuarioCampo = d.idUsuarioCampo WHERE d.idUsuarioCampo IS NULL OR u.departamento = 0");
                         if($query = mysqli_query($recordset->conn,$sql))
                         {
                             while($row=mysqli_fetch_array($query,MYSQLI_ASSOC))
@@ -1391,12 +1375,8 @@ switch($servicio)
                             {
                                 $idCampo = $row33["idCampo"];
                                 $nombreDeCampo = ($row33["nombre"]);
-                                $sql3=("SELECT m.meta, m.metaNumero, m.indicador, m.idMetasEstrategicas, u.nombre
-                                    FROM MetasEstrategicas m
-                                    INNER JOIN UsuariosCampos u on u.idUsuarioCampo = m.idUsuarioCampo
-                                    WHERE m.idDepartamentosAcciones = ".$idDepartamentosAcciones."
-                                    AND m.idCampo = ".$idCampo."
-                                    AND m.anio = ".$anio."");
+                                $sql3=("SELECT meta, metaNumero, indicador, idMetasEstrategicas, nombre FROM verAccionesDeMetasEstrategicas WHERE idDepartamentosAcciones = ".$idDepartamentosAcciones." AND idCampo = ".$idCampo." AND anio = ".$anio.")");
+                               //$sql3=("SELECT m.meta, m.metaNumero, m.indicador, m.idMetasEstrategicas, u.nombre FROM MetasEstrategicas m INNER JOIN UsuariosCampos u on u.idUsuarioCampo = m.idUsuarioCampo WHERE m.idDepartamentosAcciones = ".$idDepartamentosAcciones." AND m.idCampo = ".$idCampo." AND m.anio = ".$anio."");
                                 if($query3 = mysqli_query($recordset->conn,$sql3))
                                 {
                                     while($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
@@ -1610,10 +1590,9 @@ switch($servicio)
                         {
                             while($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql4=("SELECT g.nombre, d.nombre as distrito
-                                    FROM Grupos g
-                                    INNER JOIN Distritos d on d.idDistrito = g.idDistrito
-                                    WHERE g.idGrupo = ".$row3["idGrupo"]." order by d.nombre asc");
+                                $sql4=("SELECT nombre, nombre as distrito FROM verAccionesDeGruposNombre INNER JOIN Distritos on idDistrito = idDistrito WHERE idGrupo = ".$row3["idGrupo"]." order by nombre asc");
+
+                                //$sql4=("SELECT g.nombre, d.nombre as distrito FROM Grupos g INNER JOIN Distritos d on d.idDistrito = g.idDistrito WHERE g.idGrupo = ".$row3["idGrupo"]." order by d.nombre asc");
                                 if($query4 = mysqli_query($recordset->conn,$sql4))
                                 {
                                     if($row4=mysqli_fetch_array($query4,MYSQLI_ASSOC))
@@ -1727,10 +1706,8 @@ switch($servicio)
                         {
                             while($row3=mysqli_fetch_array($query3,MYSQLI_ASSOC))
                             {
-                                $sql4=("SELECT g.nombre, d.nombre as distrito
-                                    FROM Grupos g
-                                    INNER JOIN Distritos d on d.idDistrito = g.idDistrito
-                                    WHERE g.idGrupo = ".$row3["idGrupo"]." order by d.nombre asc");
+                                $sql4=("SELECT nombre, nombre as distrito FROM verAccionesDeGruposNombre INNER JOIN Distritos on idDistrito = idDistrito WHERE idGrupo = ".$row3["idGrupo"]." order by nombre asc");
+                                //$sql4=("SELECT g.nombre, d.nombre as distrito FROM Grupos g INNER JOIN Distritos d on d.idDistrito = g.idDistrito WHERE g.idGrupo = ".$row3["idGrupo"]." order by d.nombre asc");
                                 if($query4 = mysqli_query($recordset->conn,$sql4))
                                 {
                                     if($row4=mysqli_fetch_array($query4,MYSQLI_ASSOC))
@@ -1777,10 +1754,8 @@ switch($servicio)
                         $campos = array();
                         $anio = $_POST['anio'];
                         $denominadorCampo=1;
-                        $sql33=("SELECT COUNT(d.idDepartamentosAcciones) as denominador
-                            FROM DepartamentosAcciones2018 d
-                            INNER JOIN AccionesEstrategicas2018 a on a.idAccionEstrategica = d.idAccionEstrategica
-                            WHERE  d.anio = ".$anio." AND a.tipo = 2");
+                        $sql33=("SELECT COUNT(d.idDepartamentosAcciones) as denominador FROM verAccionesDeDepartamentosAcciones2018 WHERE  anio = ".$anio." AND tipo = 2");
+                        //$sql33=("SELECT COUNT(d.idDepartamentosAcciones) as denominador FROM DepartamentosAcciones2018 d INNER JOIN AccionesEstrategicas2018 a on a.idAccionEstrategica = d.idAccionEstrategica WHERE  d.anio = ".$anio." AND a.tipo = 2");
                         if($query33 = mysqli_query($recordset->conn,$sql33))
                         {
                             if($row33=mysqli_fetch_array($query33,MYSQLI_ASSOC))
